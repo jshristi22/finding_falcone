@@ -1,19 +1,24 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import styles from "./selection_page.module.scss";
 import DropdownComponent from "../component/dropdown_component";
+import axios from "axios";
 
+interface GetPlanetsDataType {
+  name: string;
+  distance: number;
+}
 interface DestinationPlanetValuesType {
-  destinationOne: string;
-  destinationTwo: string;
-  destinationThree: string;
-  destinationFour: string;
+  destinationOne: GetPlanetsDataType;
+  destinationTwo: GetPlanetsDataType;
+  destinationThree: GetPlanetsDataType;
+  destinationFour: GetPlanetsDataType;
 }
 
 const initialDestinationPlanetValues: DestinationPlanetValuesType = {
-  destinationOne: "",
-  destinationTwo: "",
-  destinationThree: "",
-  destinationFour: "",
+  destinationOne: { name: "", distance: 0 },
+  destinationTwo: { name: "", distance: 0 },
+  destinationThree: { name: "", distance: 0 },
+  destinationFour: { name: "", distance: 0 },
 };
 
 export default function SelectionPage() {
@@ -21,22 +26,26 @@ export default function SelectionPage() {
     useState<DestinationPlanetValuesType>(initialDestinationPlanetValues);
 
   // tobe updated with API data
-  const [planetOptions, setPlanetOptions] = useState<string[]>([
-    "one",
-    "teo",
-    "three",
-    "four",
-  ]);
+  const [planetOptions, setPlanetOptions] = useState<GetPlanetsDataType[]>([]);
+
+  useEffect(() => {
+    getPlanetsData();
+  });
 
   const onPlanetSelected = ({
     name,
+    distance,
     value,
   }: {
     name: keyof DestinationPlanetValuesType;
+    distance: number;
     value: string;
   }) => {
     //updating local state
-    const planets = { ...destinationPlanet, [name]: value };
+    const planets: DestinationPlanetValuesType = {
+      ...destinationPlanet,
+      [name]: { name: value, distance: distance },
+    };
     selectedDestinationPlanet(planets);
   };
 
@@ -44,11 +53,19 @@ export default function SelectionPage() {
     for (let i = 0; i < Object.keys(destinationPlanet).length; i++) {
       const key = Object.keys(destinationPlanet)[i];
       if (
-        option === destinationPlanet[key as keyof DestinationPlanetValuesType]
+        option ===
+        destinationPlanet[key as keyof DestinationPlanetValuesType].name
       )
         return true;
     }
     return false;
+  };
+
+  const getPlanetsData = async () => {
+    const response = await axios.get(
+      "https://findfalcone.geektrust.com/planets"
+    );
+    setPlanetOptions([...response.data]);
   };
 
   return (
@@ -64,71 +81,31 @@ export default function SelectionPage() {
           <h2 className={styles.title}>Select Planet you want to search in:</h2>
           <div className={styles.optionDetailsContainer}>
             <div className={styles.dropdownContainer}>
-              <DropdownComponent
-                value={destinationPlanet.destinationOne}
-                options={planetOptions.map((opt) => ({
-                  name: opt,
-                  value: opt,
-                  disable: isOptionDisable(opt),
-                }))}
-                autofocus
-                label="Destination 1"
-                required
-                onChange={(e) =>
-                  onPlanetSelected({
-                    name: "destinationOne",
-                    value: e.target.value,
-                  })
-                }
-              />
-              <DropdownComponent
-                value={destinationPlanet.destinationTwo}
-                options={planetOptions.map((opt) => ({
-                  name: opt,
-                  value: opt,
-                  disable: isOptionDisable(opt),
-                }))}
-                label="Destination 2"
-                required
-                onChange={(e) =>
-                  onPlanetSelected({
-                    name: "destinationTwo",
-                    value: e.target.value,
-                  })
-                }
-              />
-              <DropdownComponent
-                value={destinationPlanet.destinationThree}
-                options={planetOptions.map((opt) => ({
-                  name: opt,
-                  value: opt,
-                  disable: isOptionDisable(opt),
-                }))}
-                label="Destination 3"
-                required
-                onChange={(e) =>
-                  onPlanetSelected({
-                    name: "destinationThree",
-                    value: e.target.value,
-                  })
-                }
-              />
-              <DropdownComponent
-                value={destinationPlanet.destinationFour}
-                options={planetOptions.map((opt) => ({
-                  name: opt,
-                  value: opt,
-                  disable: isOptionDisable(opt),
-                }))}
-                label="Destination 4"
-                required
-                onChange={(e) =>
-                  onPlanetSelected({
-                    name: "destinationFour",
-                    value: e.target.value,
-                  })
-                }
-              />
+              {Object.keys(destinationPlanet).map((k, idx) => {
+                const key = k as keyof DestinationPlanetValuesType;
+                return (
+                  <>
+                    <DropdownComponent
+                      value={destinationPlanet[key].name}
+                      options={planetOptions.map((opt) => ({
+                        name: opt.name,
+                        value: opt.name,
+                        disable: isOptionDisable(opt.name),
+                      }))}
+                      autofocus
+                      label={`Destination ${idx + 1}`}
+                      required
+                      onChange={(e) =>
+                        onPlanetSelected({
+                          name: key,
+                          distance: destinationPlanet[key].distance,
+                          value: e.target.value,
+                        })
+                      }
+                    />
+                  </>
+                );
+              })}
             </div>
             <h2>Time taken: 0</h2>
           </div>
