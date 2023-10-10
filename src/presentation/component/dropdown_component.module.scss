@@ -1,0 +1,12 @@
+.dropdownComponentContainer {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  .selectContainer {
+    padding: 4px 8px;
+    border: 2px solid black;
+  }
+  .optionContainer {
+    border: 2px solid black;
+  }
+}
