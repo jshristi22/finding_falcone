@@ -1,0 +1,47 @@
+.selectionPageContainer {
+  margin: 0 auto;
+  padding: 10px 20px;
+  .menuContainer {
+    display: flex;
+    justify-content: flex-end;
+    gap: 20px;
+  }
+  .header {
+    display: flex;
+    justify-content: center;
+  }
+
+  .bodyContainer {
+    margin: 40px auto;
+    width: 70%;
+    height: 50vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    .title {
+      display: flex;
+      justify-content: center;
+    }
+    .optionDetailsContainer {
+      display: flex;
+      align-items: flex-end;
+      justify-content: space-between;
+      gap: 50px;
+      .dropdownContainer {
+        flex-grow: 1;
+        margin-top: 30px;
+        display: flex;
+        justify-content: space-between;
+      }
+    }
+    .findBtnContainer {
+      display: flex;
+      justify-content: center;
+      .findBtn {
+        color: gray;
+        border: 2px solid gray;
+        box-shadow: 2px 4px;
+      }
+    }
+  }
+}
