@@ -1,0 +1,28 @@
+.resultPageContainer {
+  display: flex;
+  flex-direction: column;
+  gap: 100px;
+  .bodyContainer {
+    height: 50vh;
+    display: flex;
+    flex-direction: column;
+    gap: 40px;
+    align-items: center;
+    h2 {
+      font-size: 28px;
+    }
+    h3 {
+      font-size: 26px;
+    }
+    .findBtnContainer {
+      display: flex;
+      justify-content: center;
+      .findBtn {
+        padding: 3px 18px;
+        color: black;
+        border: 2px solid black;
+        box-shadow: 2px 4px;
+      }
+    }
+  }
+}

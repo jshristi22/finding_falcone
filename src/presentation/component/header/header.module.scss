@@ -1,0 +1,11 @@
+.headerContainer {
+  .menuContainer {
+    display: flex;
+    justify-content: flex-end;
+    gap: 20px;
+  }
+  .header {
+    display: flex;
+    justify-content: center;
+  }
+}

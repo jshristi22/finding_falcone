@@ -1,0 +1,67 @@
+.selectionPageContainer {
+  margin: 0 auto;
+  padding: 10px 20px;
+  .menuContainer {
+    display: flex;
+    justify-content: flex-end;
+    gap: 20px;
+  }
+  .header {
+    display: flex;
+    justify-content: center;
+  }
+
+  .bodyContainer {
+    margin: 40px auto;
+    width: 80%;
+    height: 50vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    .title {
+      display: flex;
+      justify-content: center;
+    }
+    .optionDetailsContainer {
+      display: flex;
+      align-items: baseline;
+      justify-content: space-between;
+      gap: 50px;
+      .dropdownContainer {
+        flex-grow: 1;
+        margin-top: 30px;
+        display: flex;
+        justify-content: space-between;
+        .optionContainer {
+          display: flex;
+          flex-direction: column;
+          .radioContainer {
+            display: flex;
+            flex-direction: column;
+            align-items: flex-start;
+            justify-content: space-between;
+            .radioBtn {
+              display: flex;
+              align-items: center;
+              justify-content: space-between;
+            }
+          }
+        }
+      }
+      .timeContainer {
+        margin-top: 65px;
+        margin-bottom: auto;
+      }
+    }
+    .findBtnContainer {
+      display: flex;
+      justify-content: center;
+      .findBtn {
+        padding: 3px 18px;
+        color: gray;
+        border: 2px solid gray;
+        box-shadow: 2px 4px;
+      }
+    }
+  }
+}
