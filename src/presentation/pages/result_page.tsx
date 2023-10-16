@@ -1,9 +1,11 @@
-import { Link } from "react-router-dom";
+import {useNavigate } from "react-router-dom";
 import Header from "../component/header/header";
 import styles from "./result_page.module.scss";
 export default function ResultPage() {
+  const navigate = useNavigate();
   const navigateBacktoSelectionPage = () => {
-    localStorage.clear()
+    localStorage.clear();
+    navigate("/");
   };
 
   const status = localStorage.getItem("status")
@@ -15,7 +17,7 @@ export default function ResultPage() {
   const time = localStorage.getItem("time")
     ? JSON.parse(localStorage.getItem("time")!)
     : undefined;
-  
+
   return (
     <div className={styles.resultPageContainer}>
       <Header />
@@ -24,7 +26,7 @@ export default function ResultPage() {
           {status === "success"
             ? `Success! Congratulations on Finding Falcone. King Shah is mighty
           pleased.`
-            : `Please try again`}
+            : `Failure! You lost on Finding Falcone. King Shah is very enraged.`}
         </h2>
         <div>
           {time && <h3>Time taken: {time}</h3>}
@@ -34,9 +36,12 @@ export default function ResultPage() {
           onClick={navigateBacktoSelectionPage}
           className={styles.findBtnContainer}
         >
-          <Link to={"/"}>
-            <button onClick={navigateBacktoSelectionPage}className={styles.findBtn}>Start Again</button>
-          </Link>
+          <button
+            onClick={navigateBacktoSelectionPage}
+            className={styles.findBtn}
+          >
+            Start Again
+          </button>
         </div>
       </div>
     </div>

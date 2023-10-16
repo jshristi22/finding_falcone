@@ -4,7 +4,7 @@ import DropdownComponent from "../component/dropdown_component";
 import axios from "axios";
 import RadioComponent from "../component/custom_radio/radio_component";
 import Header from "../component/header/header";
-import { Link } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 
 interface vehicleDataType {
   name: string;
@@ -65,6 +65,8 @@ export default function SelectionPage() {
   const [selectedData, setSelectedData] =
     useState<UserSelectedData>(initialState);
 
+  const navigate = useNavigate();
+  
   useEffect(() => {
     getPlanetsData();
     getVehiclesData();
@@ -119,25 +121,29 @@ export default function SelectionPage() {
           ...selectedVehicle,
           // reducing vehicle's total count
           total_no: total_no ? total_no - 1 : selectedVehicle.total_no - 1,
-        },      
+        },
       },
     });
   };
-  const getVehicleTotalNumber = (vehicle: vehicleDataType):number|undefined =>{
+  const getVehicleTotalNumber = (
+    vehicle: vehicleDataType
+  ): number | undefined => {
     let value;
     for (let i = 0; i < Object.keys(selectedData).length; i++) {
       const key = Object.keys(selectedData)[i];
       const selectedVehicle =
         selectedData[key as keyof UserSelectedData].vehicle;
-      if (selectedVehicle?.name === vehicle?.name) {        
-        if(value) {
-          value = selectedVehicle?.total_no < value ? selectedVehicle.total_no : value
-        }
-        else value = selectedVehicle?.total_no ;
+      if (selectedVehicle?.name === vehicle?.name) {
+        if (value) {
+          value =
+            selectedVehicle?.total_no < value
+              ? selectedVehicle.total_no
+              : value;
+        } else value = selectedVehicle?.total_no;
       }
     }
     return value;
-  }
+  };
 
   const isRadioBtnDisable = (
     key: keyof UserSelectedData,
@@ -229,14 +235,27 @@ export default function SelectionPage() {
         },
       }
     );
-    localStorage.setItem('status', JSON.stringify(response.data.status))
-    if(response.data.planet_name) {
-      localStorage.setItem('planet', JSON.stringify(response.data.planet_name))
-      localStorage.setItem('time', JSON.stringify(calculateTime()))
+    localStorage.setItem("status", JSON.stringify(response.data.status));
+    if (response.data.planet_name) {
+      localStorage.setItem("planet", JSON.stringify(response.data.planet_name));
+      localStorage.setItem("time", JSON.stringify(calculateTime()));
     }
-
+    navigate("/result");
   };
-  
+
+  // checks whether the finding falcone btn should be unable or diable based on form data
+  const isBtnDisable = (): boolean => {
+    for (let i = 0; i < Object.keys(selectedData).length; i++) {
+      const key = Object.keys(selectedData)[i];
+      if (selectedData[key as keyof UserSelectedData].planet.name === "") {
+        return true;
+      }
+      if (selectedData[key as keyof UserSelectedData].vehicle.name === "") {
+        return true;
+      }
+    }
+    return false;
+  };
 
   return (
     <div className={styles.selectionPageContainer}>
@@ -272,14 +291,17 @@ export default function SelectionPage() {
                     />
                     {selectedData[key].planet.name !== "" && (
                       <div className={styles.radioContainer}>
-                        {vehicleOptions.map((opt: vehicleDataType) => {
+                        {vehicleOptions.map((opt: vehicleDataType, idx) => {
                           return (
                             <div className={styles.radioBtn}>
                               <RadioComponent
+                                id={`${idx.toString()}${key}`}
                                 checked={
                                   selectedData[key]?.vehicle?.name === opt?.name
-                                }                                
-                                label={`${opt.name} (${getVehicleTotalNumber(opt) ?? opt.total_no})`}
+                                }
+                                label={`${opt.name} (${
+                                  getVehicleTotalNumber(opt) ?? opt.total_no
+                                })`}
                                 disable={isRadioBtnDisable(key, opt)}
                                 onChange={() => {
                                   onVehicleSelected(key, opt);
@@ -302,7 +324,12 @@ export default function SelectionPage() {
         </div>
 
         <div onClick={findFalcone} className={styles.findBtnContainer}>
-          <Link to='/result'><button className={styles.findBtn}>Find Falcone!</button></Link>
+          <button
+            disabled={isBtnDisable()}
+            className={`${!isBtnDisable() ? styles.findBtn : styles.diableBtn}`}
+          >
+            Find Falcone!
+          </button>
         </div>
       </div>
     </div>

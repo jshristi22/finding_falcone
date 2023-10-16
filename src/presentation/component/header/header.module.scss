@@ -3,6 +3,9 @@
     display: flex;
     justify-content: flex-end;
     gap: 20px;
+    h5{
+      cursor: pointer;
+    }
   }
   .header {
     display: flex;

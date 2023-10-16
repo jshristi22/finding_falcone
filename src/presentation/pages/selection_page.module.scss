@@ -57,6 +57,14 @@
       display: flex;
       justify-content: center;
       .findBtn {
+        cursor: pointer;
+        padding: 3px 18px;        
+        color: black;
+        border: 2px solid black;
+        box-shadow: 2px 4px;
+      }
+      .diableBtn{
+        cursor: not-allowed;
         padding: 3px 18px;
         color: gray;
         border: 2px solid gray;

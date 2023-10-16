@@ -1,6 +1,9 @@
 .radioBtnComponent {
   display: flex;
   align-items: center;
+  input, label{
+    cursor: pointer;
+  }
 }
 .disableClass {
   opacity: 50%;
