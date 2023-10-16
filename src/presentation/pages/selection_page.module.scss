@@ -13,7 +13,7 @@
 
   .bodyContainer {
     margin: 40px auto;
-    width: 70%;
+    width: 80%;
     height: 50vh;
     display: flex;
     flex-direction: column;
@@ -24,7 +24,7 @@
     }
     .optionDetailsContainer {
       display: flex;
-      align-items: flex-end;
+      align-items: baseline;
       justify-content: space-between;
       gap: 50px;
       .dropdownContainer {
@@ -32,12 +32,40 @@
         margin-top: 30px;
         display: flex;
         justify-content: space-between;
+        .optionContainer {
+          display: flex;
+          flex-direction: column;
+          .radioContainer {
+            display: flex;
+            flex-direction: column;
+            align-items: flex-start;
+            justify-content: space-between;
+            .radioBtn {
+              display: flex;
+              align-items: center;
+              justify-content: space-between;
+            }
+          }
+        }
+      }
+      .timeContainer {
+        margin-top: 65px;
+        margin-bottom: auto;
       }
     }
     .findBtnContainer {
       display: flex;
       justify-content: center;
       .findBtn {
+        cursor: pointer;
+        padding: 3px 18px;        
+        color: black;
+        border: 2px solid black;
+        box-shadow: 2px 4px;
+      }
+      .diableBtn{
+        cursor: not-allowed;
+        padding: 3px 18px;
         color: gray;
         border: 2px solid gray;
         box-shadow: 2px 4px;
