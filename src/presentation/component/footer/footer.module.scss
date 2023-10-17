@@ -1,0 +1,11 @@
+.footerContainer {    
+    display: flex;
+    justify-content: center;
+    p{
+        font-weight: 600;
+        a{
+            text-decoration: none;
+            color: black;
+        }
+    }
+}

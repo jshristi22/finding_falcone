@@ -1,26 +1,29 @@
 import {useNavigate } from "react-router-dom";
-import Header from "../component/header/header";
 import styles from "./result_page.module.scss";
+import { useEffect } from "react";
 export default function ResultPage() {
   const navigate = useNavigate();
   const navigateBacktoSelectionPage = () => {
     localStorage.clear();
     navigate("/");
-  };
-
+  };  
+  
   const status = localStorage.getItem("status")
-    ? JSON.parse(localStorage.getItem("status")!)
-    : undefined;
+  ? JSON.parse(localStorage.getItem("status")!)
+  : undefined;
   const planet = localStorage.getItem("planet")
-    ? JSON.parse(localStorage.getItem("planet")!)
-    : undefined;
+  ? JSON.parse(localStorage.getItem("planet")!)
+  : undefined;
   const time = localStorage.getItem("time")
-    ? JSON.parse(localStorage.getItem("time")!)
-    : undefined;
-
+  ? JSON.parse(localStorage.getItem("time")!)
+  : undefined;
+  
+  useEffect(() => {
+    const data = localStorage.getItem("status")
+    if(!data) navigateBacktoSelectionPage();
+  },[])
   return (
     <div className={styles.resultPageContainer}>
-      <Header />
       <div className={styles.bodyContainer}>
         <h2>
           {status === "success"
