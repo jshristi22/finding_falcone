@@ -9,5 +9,16 @@
   font-family: "Courier New", Courier, monospace;
 }
 body {
+  margin: 0;
+  padding: 0;
   background-color: rgba(252, 252, 252, 0.69);
+}
+
+.appContainer{
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  .content{
+    flex: 1;
+  }
 }

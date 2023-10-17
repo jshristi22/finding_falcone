@@ -3,7 +3,6 @@ import styles from "./selection_page.module.scss";
 import DropdownComponent from "../component/dropdown_component";
 import axios from "axios";
 import RadioComponent from "../component/custom_radio/radio_component";
-import Header from "../component/header/header";
 import { useNavigate } from "react-router-dom";
 
 interface vehicleDataType {
@@ -259,7 +258,6 @@ export default function SelectionPage() {
 
   return (
     <div className={styles.selectionPageContainer}>
-      <Header />
       <div className={styles.bodyContainer}>
         <div>
           <h2 className={styles.title}>Select Planet you want to search in:</h2>
@@ -331,7 +329,7 @@ export default function SelectionPage() {
             Find Falcone!
           </button>
         </div>
-      </div>
+      </div>      
     </div>
   );
 }
